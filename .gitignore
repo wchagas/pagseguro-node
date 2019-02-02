@@ -9,6 +9,11 @@ example/config.js
 test/config.js
 package-lock.json
 
+example/api/node_modules/*
+example/api/config.js
+example/api/log/*
+example/api/package-lock.json
+
 
 # ----------------------------
 #           VIM
