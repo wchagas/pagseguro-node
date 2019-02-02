@@ -11,7 +11,7 @@ const data = {
     sender: {
         //hash: '',
         name: 'Willy Chagas',
-        email: config.emailSender,
+        email: 'c48186756307979379590@sandbox.pagseguro.com.br',
         phone: {
             areaCode: 99,
             number: 991510980

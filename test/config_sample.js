@@ -3,7 +3,6 @@
  */
 const pagseguro = {
   email: '',
-  senderEmail: '', // user@sandbox.pagseguro.com.br
   token: '',
   appId: '',
   appKey: '',
