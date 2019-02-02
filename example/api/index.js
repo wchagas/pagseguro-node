@@ -1,5 +1,5 @@
 import express from 'express'
-import pagseguro from '../../../nodejs'
+import pagseguro from '../../index'
 import config from './config'
 import bodyParser from 'body-parser'
 

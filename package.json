@@ -23,6 +23,7 @@
   "author": "Willy Chagas <willychagasf@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "ip": "^1.1.5",
     "clone": "^2.1.2",
     "fast-xml-parser": "^3.12.5",
     "request": "^2.88.0",
