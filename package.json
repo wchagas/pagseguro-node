@@ -1,6 +1,6 @@
 {
-	"name": "pagseguro-nodejs",
-	"version": "1.0.0",
+	"name": "nodejs-pagseguro",
+	"version": "1.0.1",
 	"author": "Willy Chagas <chagaswc89@gmail.com",
 	"description": "pagseguro nodejs",
 	"license": "MIT",
@@ -9,9 +9,7 @@
 		"test": "NODE_ENV=tests jest",
 		"example": "nodemon example/api/index.js",
 		"clean": "rimraf lib",
-		"build": "BABEL_ENV=production babel src --out-dir lib",
-		"postversion": "git push && git push --tags && rm -rf build/temp",
-		"prepublish": "npm run clean && npm run test && npm run build"
+		"build": "BABEL_ENV=production babel src --out-dir lib"
 	},
 	"dependencies": {
 		"ip": "^1.1.5",
@@ -44,12 +42,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/wchagas/pagseguro-nodejs.git"
+		"url": "git+https://github.com/wchagas/pagseguro-node.git"
 	},
 	"bugs": {
-		"url": "https://github.com/wchagas/pagseguro-nodejs/issues"
+		"url": "https://github.com/wchagas/pagseguro-node/issues"
 	},
-	"homepage": "https://github.com/wchagas/pagseguro-nodejs#readme",
+	"homepage": "https://github.com/wchagas/pagseguro-node#readme",
 	"keywords": [
 		"nodejs",
 		"pagseguro"

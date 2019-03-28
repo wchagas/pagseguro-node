@@ -20,7 +20,7 @@ Veja também: ([Pagseguro + ReactJS](https://github.com/wchagas/pagseguro-react)
 
 ## Instalação
 ```
-npm install pagseguro-nodejs
+npm install nodejs-pagseguro
 ```
 
 ## Exemplo de Api
