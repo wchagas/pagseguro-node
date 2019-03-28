@@ -6,7 +6,8 @@
 node_modules/*
 example/log/*
 example/config.js
-test/config.js
+tests/config.js
+tests/log/*
 package-lock.json
 
 example/api/node_modules/*

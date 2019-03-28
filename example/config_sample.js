@@ -1,5 +1,4 @@
-
-export default {
+module.exports = {
     email: '', // email da conta do pagseguro
     token: '', // token pagseguro
     appId: '', // ID da aplicação (pagamento recorrente)

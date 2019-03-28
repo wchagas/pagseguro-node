@@ -1,9 +1,0 @@
-{
-    "presets": ["es2016", "stage-2"],
-    "plugins": [
-        ["transform-es2015-modules-commonjs", {
-          "allowTopLevelThis": true
-        }]
-    ]
-}
-

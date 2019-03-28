@@ -1,33 +1,26 @@
 {
-  "name": "pagseguro-node",
-  "version": "1.0.0",
-  "description": "pagseguro nodejs",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha --compilers js:babel-core/register --timeout 10000",
-    "example": "nodemon --exec babel-node example/index.js --inspect",
-    "dev": "nodemon --exec babel-node index.js --inspect"
-  },
-  "devDependencies": {
-    "@std/esm": "^0.26.0",
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2016": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "chai": "^4.2.0",
-    "chai-param": "^0.1.2",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.17.3"
-  },
-  "author": "Willy Chagas <willychagasf@gmail.com>",
-  "license": "ISC",
-  "dependencies": {
-    "ip": "^1.1.5",
-    "clone": "^2.1.2",
-    "fast-xml-parser": "^3.12.5",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "winston": "^3.1.0"
-  }
+ "name": "pagseguro-node",
+ "version": "1.0.0",
+ "description": "pagseguro nodejs",
+ "main": "index.js",
+ "scripts": {
+  "test": "NODE_ENV=tests jest",
+  "example": "nodemon example/api/index.js"
+ },
+ "author": "Willy Chagas <willychagasf@gmail.com>",
+ "license": "ISC",
+ "dependencies": {
+  "ip": "^1.1.5",
+  "clone": "^2.1.2",
+  "fast-xml-parser": "^3.12.5",
+  "request": "^2.88.0",
+  "request-promise": "^4.2.2",
+  "winston": "^3.1.0"
+ },
+ "devDependencies": {
+  "jest": "^24.1.0",
+  "nodemon": "^1.17.3",
+  "body-parser": "^1.18.3",
+  "express": "^4.16.4"
+ }
 }

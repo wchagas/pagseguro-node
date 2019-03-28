@@ -217,11 +217,25 @@ const company = {
 }
 
 
+const authorization = {
+	permissions: [
+		'CREATE_CHECKOUTS',
+		'SEARCH_TRANSACTIONS',
+		'RECEIVE_TRANSACTION_NOTIFICATIONS',
+		'MANAGE_PAYMENT_PRE_APPROVALS',
+		'DIRECT_PAYMENT'
+	],
+
+	redirecURL: 'http://domain.com',
+	notificationURL: 'http://domain.com',
+}
+
 
 /**
 * exports
 */
 module.exports = {
+	authorization,
     pagseguro,
     accounts,
     person,

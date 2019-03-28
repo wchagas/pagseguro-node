@@ -1,10 +1,10 @@
-import pagseguro from '../../'
-import config from '../config'
+const pagseguro = require('../../lib')
+const config = require('../config')
 
 const client = pagseguro.connect(config)
 
 const params = {
-    
+
     permissions: [
         'CREATE_CHECKOUTS',
         'SEARCH_TRANSACTIONS',
@@ -12,7 +12,7 @@ const params = {
         'MANAGE_PAYMENT_PRE_APPROVALS',
         'DIRECT_PAYMENT'
     ],
-    
+
     redirecURL: 'http://domain.com'
     notificationURL: 'http://domain.com'
 }

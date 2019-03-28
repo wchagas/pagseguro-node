@@ -1,5 +1,5 @@
-const pagseguro = require('../../')
-import config from '../config'
+const pagseguro = require('../../lib')
+const config = require('../config')
 
 const client = pagseguro.connect(config)
 

@@ -1,5 +1,5 @@
-import pagseguro from '../../'
-import config from '../config'
+const pagseguro = require('../../lib')
+const config = require('../config')
 
 const client = pagseguro.connect(config)
 const transactionCode = ''

@@ -1,7 +1,7 @@
-import express from 'express'
-import pagseguro from '../../index'
-import config from './config'
-import bodyParser from 'body-parser'
+const express = require('express')
+const pagseguro = require('../../lib')
+const config = require('../config')
+const bodyParser = require('body-parser')
 
 
 /**
