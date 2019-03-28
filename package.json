@@ -9,7 +9,9 @@
 		"test": "NODE_ENV=tests jest",
 		"example": "nodemon example/api/index.js",
 		"clean": "rimraf lib",
-		"build": "BABEL_ENV=production babel src --out-dir lib"
+		"build": "BABEL_ENV=production babel src --out-dir lib",
+		"postversion": "git push && git push --tags && rm -rf build/temp",
+		"prepublish": "npm run clean && npm run test && npm run build"
 	},
 	"dependencies": {
 		"ip": "^1.1.5",
