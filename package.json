@@ -1,26 +1,57 @@
 {
- "name": "pagseguro-node",
- "version": "1.0.0",
- "description": "pagseguro nodejs",
- "main": "index.js",
- "scripts": {
-  "test": "NODE_ENV=tests jest",
-  "example": "nodemon example/api/index.js"
- },
- "author": "Willy Chagas <willychagasf@gmail.com>",
- "license": "ISC",
- "dependencies": {
-  "ip": "^1.1.5",
-  "clone": "^2.1.2",
-  "fast-xml-parser": "^3.12.5",
-  "request": "^2.88.0",
-  "request-promise": "^4.2.2",
-  "winston": "^3.1.0"
- },
- "devDependencies": {
-  "jest": "^24.1.0",
-  "nodemon": "^1.17.3",
-  "body-parser": "^1.18.3",
-  "express": "^4.16.4"
- }
+	"name": "pagseguro-nodejs",
+	"version": "1.0.0",
+	"author": "Willy Chagas <chagaswc89@gmail.com",
+	"description": "pagseguro nodejs",
+	"license": "MIT",
+	"main": "./lib/index.js",
+	"scripts": {
+		"test": "NODE_ENV=tests jest",
+		"example": "nodemon example/api/index.js",
+		"clean": "rimraf lib",
+		"build": "BABEL_ENV=production babel src --out-dir lib",
+		"postversion": "git push && git push --tags && rm -rf build/temp",
+		"prepublish": "npm run clean && npm run test && npm run build"
+	},
+	"dependencies": {
+		"ip": "^1.1.5",
+		"clone": "^2.1.2",
+		"fast-xml-parser": "^3.12.5",
+		"request": "^2.88.0",
+		"request-promise": "^4.2.2",
+		"winston": "^3.1.0"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.2.3",
+		"@babel/core": "^7.2.2",
+		"@babel/node": "^7.2.2",
+		"@babel/plugin-proposal-class-properties": "^7.3.0",
+		"@babel/plugin-syntax-dynamic-import": "^7.0.0",
+		"@babel/plugin-syntax-object-rest-spread": "^7.0.0",
+		"@babel/plugin-transform-runtime": "^7.2.0",
+		"@babel/polyfill": "^7.2.5",
+		"@babel/preset-env": "^7.3.1",
+		"@babel/preset-es2015": "^7.0.0-beta.53",
+		"@babel/register": "^7.0.0",
+		"@babel/runtime": "^7.3.1",
+		"babel-plugin-add-module-exports": "^1.0.0",
+		"babel-preset-minify": "^0.5.0",
+		"rimraf": "^2.6.2",
+		"jest": "^24.1.0",
+		"nodemon": "^1.17.3",
+		"body-parser": "^1.18.3",
+		"express": "^4.16.4"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wchagas/pagseguro-nodejs.git"
+	},
+	"bugs": {
+		"url": "https://github.com/wchagas/pagseguro-nodejs/issues"
+	},
+	"homepage": "https://github.com/wchagas/pagseguro-nodejs#readme",
+	"keywords": [
+		"nodejs",
+		"pagseguro"
+	]
 }

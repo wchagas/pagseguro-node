@@ -1,5 +1,5 @@
 const config = require('./config')
-const pagseguro = require('../lib')
+const pagseguro = require('../src')
 const clone = require('clone')
 
 describe('Format', function() {

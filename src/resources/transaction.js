@@ -109,8 +109,6 @@ const onlineDebit = async (opts, params) => {
     params.method = 'EFT'
     params = formatRequestParams(opts, params)
 
-	console.log(params)
-
 	try {
 	    const response = await request({
 	        ...opts,

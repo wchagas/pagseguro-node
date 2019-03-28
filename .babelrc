@@ -1,0 +1,24 @@
+{
+  "env": {
+    "development": {
+      "presets": ["@babel/preset-env"],
+      "plugins": [
+		  "@babel/plugin-transform-runtime",
+		  "@babel/plugin-syntax-object-rest-spread",
+		  "@babel/plugin-proposal-class-properties",
+		  "@babel/plugin-syntax-dynamic-import",
+		  "add-module-exports"
+      ]
+    },
+    "production": {
+      "presets": ["@babel/preset-env", "minify"],
+      "plugins": [
+		  "@babel/plugin-transform-runtime",
+		  "@babel/plugin-syntax-object-rest-spread",
+		  "@babel/plugin-proposal-class-properties",
+		  "@babel/plugin-syntax-dynamic-import",
+		  "add-module-exports"
+      ]
+    }
+  }
+}

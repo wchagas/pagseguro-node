@@ -1,5 +1,5 @@
 const express = require('express')
-const pagseguro = require('../../lib')
+const pagseguro = require('../../src')
 const config = require('../config')
 const bodyParser = require('body-parser')
 

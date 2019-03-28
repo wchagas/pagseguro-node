@@ -1,5 +1,5 @@
 const config = require('./config')
-const pagseguro = require('../lib')
+const pagseguro = require('../src')
 
 
 let TRANSACTION_CODE = null
