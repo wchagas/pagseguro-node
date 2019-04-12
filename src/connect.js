@@ -19,7 +19,7 @@ module.exports = (params) => {
 	/**
      * Log
      */
-    let log = console.log
+    let log = console
 	if (params.debug) {
 	    if (params.logger) {
 	        log = logger
