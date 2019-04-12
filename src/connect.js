@@ -19,16 +19,16 @@ module.exports = (params) => {
 	/**
      * Log
      */
-    let log = console
-	if (params.debug) {
-	    if (params.logger) {
-	        log = logger
-	    } else {
-			log = logger(params.log, params.debug)
-		}
+    let log = {
+		log: () => {},
+		info: () => {},
+		error: () => {},
+		success: () => {},
 	}
 
-
+	if (params.debug) {
+		log = logger(params.log, params.debug)
+	}
 
 
     /**

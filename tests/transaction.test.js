@@ -68,7 +68,7 @@ describe('Transaction', function() {
 	it('search', async function() {
 
         const response = await client.transaction.search({
-			initialDate: '2018-10-01T12:00',
+			initialDate: '2019-01-01T12:00',
 			maxPageResults: 20, // maximo 20
 			page: 1,
 		})
