@@ -1,6 +1,6 @@
 {
 	"name": "nodejs-pagseguro",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"author": "Willy Chagas <chagaswc89@gmail.com",
 	"description": "pagseguro nodejs",
 	"license": "MIT",
@@ -14,6 +14,7 @@
 		"prepublish": "npm run clean && npm run test && npm run build"
 	},
 	"dependencies": {
+		"@babel/runtime": "^7.4.4",
 		"ip": "^1.1.5",
 		"clone": "^2.1.2",
 		"fast-xml-parser": "^3.12.5",

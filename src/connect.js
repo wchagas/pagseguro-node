@@ -55,7 +55,7 @@ module.exports = (params) => {
         },
         transform: (body, response, resolveWithFullResponse) => {
 
-            //console.log(response)
+            console.log(response)
 
             let status =  response.statusCode <= 200 ? 'success' : 'error'
 
