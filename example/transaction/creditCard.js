@@ -13,8 +13,12 @@ const data = {
         token: '',
         installment: {
 
+            // Valor total dos itens para venda (vide documentação do Pagseguro)
+            totalAmount: 20.00,
+            
             // Valor das parcelas obtidas no serviço de opções de parcelamento
-            value: '20.00',
+            installmentAmount: 20,
+            
 
             // Quantidade de parcelas escolhidas pelo cliente
             quantity: 4,
