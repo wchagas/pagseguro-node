@@ -1,6 +1,6 @@
 {
 	"name": "nodejs-pagseguro",
-	"version": "1.0.5",
+	"version": "1.0.7",
 	"author": "Willy Chagas <chagaswc89@gmail.com",
 	"description": "pagseguro nodejs",
 	"license": "MIT",
