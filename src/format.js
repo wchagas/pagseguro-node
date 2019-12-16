@@ -1,7 +1,6 @@
-const clone = require('clone')
-const validate = require('./validate')
-const ip = require('ip')
-
+const clone = require("clone");
+const validate = require("./validate");
+const ip = require("ip");
 
 /**
  * sender
@@ -9,26 +8,23 @@ const ip = require('ip')
  * @return {Object}
  */
 function sender(sender) {
+  if (!validate.isObject(sender)) {
+    return {};
+  }
 
-	if (!validate.isObject(sender)) {
-		return {}
-	}
+  sender = clone(sender);
 
-	sender = clone(sender)
+  if (sender.document) {
+    sender.documents = {
+      document: sender.document || {}
+    };
+    delete sender.document;
+  }
 
-	if (sender.document) {
-        sender.documents = {
-            document: sender.document || {}
-        }
-		delete sender.document
-    }
+  sender.ip = ip.address();
 
-	sender.ip = ip.address()
-
-	return sender
+  return sender;
 }
-
-
 
 /**
  * creditCard
@@ -37,48 +33,48 @@ function sender(sender) {
  * @return {Object}
  */
 function creditCard(creditCard, params = {}) {
+  if (!validate.isObject(creditCard)) {
+    return {};
+  }
 
-	if (!validate.isObject(creditCard)) {
-		return {}
-	}
+  creditCard = clone(creditCard);
 
-	creditCard = clone(creditCard)
+  if (creditCard.holder && validate.isObject(creditCard.holder)) {
+    creditCard.holder.documents = {
+      document: creditCard.holder.document || {}
+    };
 
-    if (creditCard.holder && validate.isObject(creditCard.holder)) {
-        creditCard.holder.documents = {
-            document: creditCard.holder.document || {}
-        }
+    if (creditCard.holder.document) delete creditCard.holder.document;
+  }
 
-		if (creditCard.holder.document) delete creditCard.holder.document
+  if (creditCard.installment) {
+    const { installmentAmount } = creditCard.installment;
+
+    creditCard.installment = {
+      quantity: creditCard.installment.quantity
+    };
+
+    if (installmentAmount) {
+      creditCard.installment.value = Number(installmentAmount).toFixed(2);
     }
 
-    if (creditCard.installment) {
-        const { installmentAmount } = creditCard.installment
-
-        creditCard.installment = {
-            quantity: creditCard.installment.quantity,
-        }
-
-        if (installmentAmount && installmentAmount.toFixed) {
-            creditCard.installment.value = installmentAmount.toFixed(2)
-        }
-
-        if (creditCard.maxInstallmentNoInterest && creditCard.maxInstallmentNoInterest > 1) {
-            creditCard.installment.noInterestInstallmentQuantity = creditCard.maxInstallmentNoInterest
-        }
+    if (
+      creditCard.maxInstallmentNoInterest &&
+      creditCard.maxInstallmentNoInterest > 1
+    ) {
+      creditCard.installment.noInterestInstallmentQuantity =
+        creditCard.maxInstallmentNoInterest;
     }
+  }
 
-    if (params.billing) {
-        creditCard.billingAddress = params.billing || {}
-    } else {
-		creditCard.billingAddress = {}
-	}
+  if (params.billing) {
+    creditCard.billingAddress = params.billing || {};
+  } else {
+    creditCard.billingAddress = {};
+  }
 
-
-    return creditCard
+  return creditCard;
 }
-
-
 
 /**
  * billing
@@ -86,25 +82,25 @@ function creditCard(creditCard, params = {}) {
  * @return {Object}
  */
 function billing(billing) {
+  billing = clone(billing);
 
-	billing = clone(billing)
+  if (!validate.isObject(billing)) {
+    return { addressRequired: false };
+  }
 
-	if (!validate.isObject(billing)) {
-		return { addressRequired: false }
-	}
+  if (
+    billing.hasOwnProperty("addressRequired") &&
+    billing.addressRequired == false
+  ) {
+    return { addressRequired: false };
+  }
 
-	if (billing.hasOwnProperty('addressRequired') && billing.addressRequired == false) {
-		return { addressRequired: false }
-	}
+  if (Object.keys(billing).length == 0) {
+    return { addressRequired: false };
+  }
 
-	if (Object.keys(billing).length == 0) {
-		return { addressRequired: false }
-	}
-
-	return { address: billing }
+  return { address: billing };
 }
-
-
 
 /**
  * shipping
@@ -112,35 +108,35 @@ function billing(billing) {
  * @return {Object}
  */
 function shipping(shipping) {
+  if (!validate.isObject(shipping)) {
+    return { addressRequired: false };
+  }
 
-	if (!validate.isObject(shipping)) {
-		return { addressRequired: false }
-	}
+  shipping = clone(shipping);
 
-	shipping = clone(shipping)
+  if (
+    shipping.hasOwnProperty("addressRequired") &&
+    shipping.addressRequired == false
+  ) {
+    return { addressRequired: false };
+  }
 
-	if (shipping.hasOwnProperty('addressRequired') && shipping.addressRequired == false) {
-		return { addressRequired: false }
-	}
+  if (Object.keys(shipping).length == 0) {
+    return { addressRequired: false };
+  }
 
-	if (Object.keys(shipping).length == 0) {
-		return { addressRequired: false }
-	}
+  const newShipping = { address: shipping };
 
-	const newShipping = { address: shipping }
+  if (shipping.type) {
+    newShipping.type = shipping.type;
+  }
 
-	if (shipping.type) {
-		newShipping.type = shipping.type
-	}
+  if (shipping.cost) {
+    newShipping.cost = Number(shipping.cost).toFixed(2);
+  }
 
-	if (shipping.cost) {
-		newShipping.cost = shipping.cost.toFixed ? shipping.cost.toFixed(2) : shipping.cost
-	}
-
-	return newShipping
+  return newShipping;
 }
-
-
 
 /**
  * extraAmount
@@ -148,15 +144,12 @@ function shipping(shipping) {
  * @return {Object}
  */
 function extraAmount(extraAmount) {
+  if (extraAmount) {
+    extraAmount = Number(extraAmount).toFixed(2);
+  }
 
-    if (extraAmount && extraAmount.toFixed) {
-        extraAmount = extraAmount.toFixed(2)
-    }
-
-	return extraAmount
+  return extraAmount;
 }
-
-
 
 /**
  * items
@@ -164,24 +157,56 @@ function extraAmount(extraAmount) {
  * @return {Object}
  */
 function items(items) {
+  if (!validate.isArray(items)) {
+    return { item: [] };
+  }
 
-	if (!validate.isArray(items)) {
-		return { item: [] }
-	}
+  items = clone(items);
 
-	items = clone(items)
-
-    return {
-        item: items.map(item => {
-            if (item.amount && item.amount.toFixed) {
-                item.amount = item.amount.toFixed(2)
-            }
-            return item
-        })
-    }
+  return {
+    item: items.map(item => {
+      if (item.amount) {
+        item.amount = Number(item.amount).toFixed(2);
+      }
+      return item;
+    })
+  };
 }
 
+/**
+ * receivers
+ * @param {Array} receivers
+ * @return {Object}
+ */
+function receivers(receivers) {
+  if (!validate.isArray(receivers)) {
+    return { receiver: [] };
+  }
 
+  receivers = clone(receivers);
+
+  return {
+    receiver: receivers.map(receiver => {
+      if (receiver.split.amount) {
+        receiver.split.amount = Number(receiver.split.amount).toFixed(2);
+      }
+
+      if (receiver.split.ratePercent) {
+        receiver.split.ratePercent = Number(receiver.split.ratePercent).toFixed(
+          2
+        );
+      }
+
+      if (receiver.split.feePercent) {
+        receiver.split.feePercent = Number(receiver.split.feePercent).toFixed(
+          2
+        );
+      }
+
+      return receiver;
+    })
+  };
+}
 
 /**
  * permissions
@@ -189,17 +214,14 @@ function items(items) {
  * @return {Object}
  */
 function permissions(permissions) {
+  if (!validate.isArray(permissions)) {
+    return { code: permissions };
+  }
 
-	if (!validate.isArray(permissions)) {
-		return { code: permissions }
-	}
-
-    return {
-        code: permissions
-    }
+  return {
+    code: permissions
+  };
 }
-
-
 
 /**
  * person
@@ -207,17 +229,14 @@ function permissions(permissions) {
  * @return {Object}
  */
 function person(person) {
+  if (!validate.isObject(person)) {
+    return {};
+  }
 
-	if (!validate.isObject(person)) {
-		return {}
-	}
+  person = clone(person);
 
-    person = clone(person)
-
-    return person
+  return person;
 }
-
-
 
 /**
  * company
@@ -225,18 +244,14 @@ function person(person) {
  * @return {Object}
  */
 function company(company) {
+  if (!validate.isObject(company)) {
+    return {};
+  }
 
-	if (!validate.isObject(company)) {
-		return {}
-	}
+  company = clone(company);
 
-    company = clone(company)
-
-    return company
+  return company;
 }
-
-
-
 
 /**
  * account
@@ -244,36 +259,33 @@ function company(company) {
  * @return {Object}
  */
 function account(a) {
+  if (!validate.isObject(account)) {
+    return {};
+  }
 
-	if (!validate.isObject(account)) {
-		return {}
-	}
-
-    switch(account.type) {
-        case 'PERSON':
-            return person(account)
-            break
-        case 'COMPANY':
-            return company(account)
-            break
-        default:
-            return {}
-
-    }
+  switch (account.type) {
+    case "PERSON":
+      return person(account);
+      break;
+    case "COMPANY":
+      return company(account);
+      break;
+    default:
+      return {};
+  }
 }
-
-
 
 /**
  * exports
  */
 module.exports = {
-	sender,
-    creditCard,
-	shipping,
-	billing,
-	items,
-    extraAmount,
-    permissions,
-    account
-}
+  sender,
+  creditCard,
+  shipping,
+  billing,
+  items,
+  extraAmount,
+  permissions,
+  account,
+  receivers
+};

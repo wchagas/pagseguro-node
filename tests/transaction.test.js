@@ -1,45 +1,39 @@
-const config = require('./config')
-const pagseguro = require('../src')
+const config = require("./config");
+const pagseguro = require("../src");
+const moment = require("moment");
 
+let TRANSACTION_CODE = null;
 
-let TRANSACTION_CODE = null
+describe("Transaction", function() {
+  const client = pagseguro.connect(config.pagseguro);
 
-describe('Transaction', function() {
+  it("boleto", async function() {
+    const data = { ...config.payment };
+    delete data.creditCard;
+    delete data.bank;
 
-	const client = pagseguro.connect(config.pagseguro)
+    const response = await client.transaction.boleto(data);
 
+    expect(typeof response).toEqual("object");
+    expect(response).toHaveProperty("statusCode", 200);
+    expect(response).toHaveProperty("status", "success");
+    expect(response).toHaveProperty("content");
 
-    it('boleto', async function() {
+    TRANSACTION_CODE = response.content.code;
+  });
 
-		const data = { ...config.payment }
-		delete data.creditCard
-		delete data.bank
+  it("online debit", async function() {
+    const response = await client.transaction.onlineDebit(config.payment);
 
-        const response = await client.transaction.boleto(data)
+    expect(typeof response).toEqual("object");
+    expect(response).toHaveProperty("statusCode", 200);
+    expect(response).toHaveProperty("status", "success");
+    expect(response).toHaveProperty("content");
 
-		expect(typeof response).toEqual('object')
-		expect(response).toHaveProperty('statusCode', 200)
-		expect(response).toHaveProperty('status', 'success')
-		expect(response).toHaveProperty('content')
+    TRANSACTION_CODE = response.content.code;
+  });
 
-		TRANSACTION_CODE = response.content.code
-    })
-
-
-	it('online debit', async function() {
-
-        const response = await client.transaction.onlineDebit(config.payment)
-
-		expect(typeof response).toEqual('object')
-		expect(response).toHaveProperty('statusCode', 200)
-		expect(response).toHaveProperty('status', 'success')
-		expect(response).toHaveProperty('content')
-
-		TRANSACTION_CODE = response.content.code
-    })
-
-
-	/*
+  /*
 	TODO: get token?
 	it('credit card', async function() {
         this.timeout(10000)
@@ -54,68 +48,61 @@ describe('Transaction', function() {
     })
 	*/
 
-	it('get', async function() {
+  it("get", async function() {
+    const response = await client.transaction.get(TRANSACTION_CODE);
 
-        const response = await client.transaction.get(TRANSACTION_CODE)
+    expect(typeof response).toEqual("object");
+    expect(response).toHaveProperty("statusCode", 200);
+    expect(response).toHaveProperty("status", "success");
+    expect(response).toHaveProperty("content");
+  });
 
-		expect(typeof response).toEqual('object')
-		expect(response).toHaveProperty('statusCode', 200)
-		expect(response).toHaveProperty('status', 'success')
-		expect(response).toHaveProperty('content')
-    })
+  it("search", async function() {
+    const response = await client.transaction.search({
+      initialDate: moment()
+        .subtract(1, "day")
+        .format("YYYY-MM-DDTHH:mm"), //  '2019-01-01T12:00'
+      maxPageResults: 20, // maximo 20
+      page: 1
+    });
 
+    expect(typeof response).toEqual("object");
+    expect(response).toHaveProperty("statusCode", 200);
+    expect(response).toHaveProperty("status", "success");
+    expect(response).toHaveProperty("content");
+  });
 
-	it('search', async function() {
+  it("search by reference", async function() {
+    const response = await client.transaction.search({
+      reference: "test_pagseguro_nodejs"
+    });
 
-        const response = await client.transaction.search({
-			initialDate: '2019-01-01T12:00',
-			maxPageResults: 20, // maximo 20
-			page: 1,
-		})
+    expect(typeof response).toEqual("object");
+    expect(response).toHaveProperty("statusCode", 200);
+    expect(response).toHaveProperty("status", "success");
+    expect(response).toHaveProperty("content");
+  });
 
-		expect(typeof response).toEqual('object')
-		expect(response).toHaveProperty('statusCode', 200)
-		expect(response).toHaveProperty('status', 'success')
-		expect(response).toHaveProperty('content')
-    })
+  it("notification", async function() {
+    try {
+      const notificationCode = "";
+      const response = await client.transaction.notification(notificationCode);
+    } catch (e) {
+      expect(typeof e).toEqual("object");
+      expect(e).toHaveProperty("name", "PagseguroError");
+      expect(e).toHaveProperty("status", "error");
+      expect(e).toHaveProperty("statusCode", 400);
+      expect(e).toHaveProperty("content");
+      expect(Array.isArray(e.content)).toEqual(true);
+    }
+  });
 
+  it("cancel", async function() {
+    const response = await client.transaction.cancel(TRANSACTION_CODE);
 
-	it('search by reference', async function() {
-
-        const response = await client.transaction.search({
-			reference: 'test_pagseguro_nodejs'
-		})
-
-		expect(typeof response).toEqual('object')
-		expect(response).toHaveProperty('statusCode', 200)
-		expect(response).toHaveProperty('status', 'success')
-		expect(response).toHaveProperty('content')
-    })
-
-
-	it('notification', async function() {
-		try {
-			const notificationCode = ''
-	        const response = await client.transaction.notification(notificationCode)
-		} catch(e) {
-			expect(typeof e).toEqual('object')
-			expect(e).toHaveProperty('name', 'PagseguroError')
-			expect(e).toHaveProperty('status', 'error')
-			expect(e).toHaveProperty('statusCode', 400)
-			expect(e).toHaveProperty('content')
-			expect(Array.isArray(e.content)).toEqual(true)
-		}
-    })
-
-
-	it('cancel', async function() {
-
-        const response = await client.transaction.cancel(TRANSACTION_CODE)
-
-		expect(typeof response).toEqual('object')
-		expect(response).toHaveProperty('statusCode', 200)
-		expect(response).toHaveProperty('status', 'success')
-		expect(response).toHaveProperty('content')
-    })
-
-})
+    expect(typeof response).toEqual("object");
+    expect(response).toHaveProperty("statusCode", 200);
+    expect(response).toHaveProperty("status", "success");
+    expect(response).toHaveProperty("content");
+  });
+});
