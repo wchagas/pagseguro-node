@@ -118,7 +118,6 @@ function isEmail(value) {
  * @return {Boolean}
  */
 function connect(params) {
-	console.log(params);
 	if (!isObject(params)) {
 		return;
 	}
