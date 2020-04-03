@@ -17,9 +17,9 @@ module.exports = {
     //abandoned: 'v2/transactions' TODO: use?
     directPayment: "v2/transactions",
     code: "v2/transactions",
-    refund: "v2/transactions/refunds/",
-    cancel: "v2/transactions/cancels/",
-    notification: "v3/transactions/notifications/"
+    refund: "v2/transactions/refunds",
+    cancel: "v2/transactions/cancels",
+    notification: "v3/transactions/notifications"
   },
   split: {
     transaction: "transactions"
