@@ -18,10 +18,10 @@ module.exports = params => {
 	 * Log
 	 */
 	let log = {
-		log: () => {},
-		info: () => {},
-		error: () => {},
-		success: () => {}
+		log: () => { },
+		info: () => { },
+		error: () => { },
+		success: () => { }
 	};
 
 	if (params.debug) {
@@ -45,7 +45,8 @@ module.exports = params => {
 		base: {
 			base: getBaseUrl(params.env, "base"),
 			static: getBaseUrl(params.env, "static"),
-			webservice: getBaseUrl(params.env, "webservice")
+			webservice: getBaseUrl(params.env, "webservice"),
+			cards: getBaseUrl(params.env, "cards")
 		},
 		headers: {
 			"Content-Type": "application/xml"
